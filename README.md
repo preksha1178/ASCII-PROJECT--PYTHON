@@ -1,4 +1,3 @@
-.
 
 🎨 ASCII Project (Python)
 
