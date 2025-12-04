@@ -100,24 +100,6 @@ Press 1–6 to select any mode.
 
 Choose the desired option, enter your input (character, word, range, etc.), and the corresponding ASCII art will be printed in color.
 
-## 🖼 Example Output
-
-Input:
-
-A
-
-Output (example):
-
-  `***`
- `*   *`
- `*****`
- `*   *` 
- `*   *` 
-
-
-
-(Colors are applied based on the selected mode.)
-
 ## ⚠ Notes
 - Works only on Windows Terminal.
 - Uses:
