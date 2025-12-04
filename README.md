@@ -54,12 +54,16 @@ The project includes:
 - Menu-based UI  
 - Input validation  
 - Character slicing logic  
-- All five functional modules  
+- All five functional modules
+
+## how to install Colorama:
+pip install colorama
 
 ## ⚙ Installation
 
 1️⃣ Install Python (if not installed)
 Download from: https://www.python.org/
+
 2️⃣ Clone the repository
 git clone https://github.com/your-username/ASCII-PROJECT.git
 
@@ -77,7 +81,7 @@ When you run the script, you will see:
 
 ** ASCII ART PROJECT **
 
-OPTIONS --
+## OPTIONS --
 
 One Character
 
