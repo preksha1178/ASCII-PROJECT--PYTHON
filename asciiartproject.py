@@ -3,8 +3,6 @@ import msvcrt as msv
 import sys
 from colorama import Fore, Back, Style, init
 init(autoreset=True)
-
-# ------------------ COLOR SELECTION ------------------
 def chooseColor():
     os.system("cls")
     print("\n\n***** SELECT TEXT COLOR *****\n")
@@ -14,9 +12,8 @@ def chooseColor():
     print("4. BLUE")
     print("5. MAGENTA")
     print("6. CYAN")
-
-    choice = input("\nEnter Color Number (1-6): ").strip()
-
+    print("\nEnter Color Number (1-6): ",end="")
+    choice=msv.getch().decode()
     if choice == "1": return Fore.RED
     if choice == "2": return Fore.GREEN
     if choice == "3": return Fore.YELLOW
@@ -28,7 +25,6 @@ def chooseColor():
     msv.getch()
     return chooseColor()
 
-# ------------------------------------------------------
 
 data = [
     " ***  ****   ***  ****  ***** *****  ***  *   * ***** ***** *   * *     *   * *   *  ***  ****   ***  ****   **** ***** *   * *   * *   * *   * *   * *****        ***                     ***  ***   ****  ****  *   * *****  ***  *****  ***  ***** ",
@@ -37,116 +33,182 @@ data = [
     "***** *   * *   * *   * *     *     *   * *   *   *   *  *  *  *  *     *   * *  ** *   * *     *   * *  *      *   *   *   *  * *  ** **  * *    *    *          * * *              ***  *   *   *   ***       *     *     * *   *     * *   *     * ",
     "*   * ****   ***  ****  ***** *      ***  *   * *****  ***  *   * ***** *   * *   *  ***  *      ***  *   * ****    *   *****   *   *   * *   *   *   *****        ***  *****        ***   ***  ***** ***** ****      * ****   ***      *  ***      * "
 ]
+sm_data = [  
+    "      *               *        * *          *            *   *       *                      *                       *                                       ", 
+    "  *** *      ****     *  ****  *  * ****    *     *          ****    *                ***   **** ****  *            *                           *  *        ",
+    " **** ****  *      ****  *  * ****  **** *  ****         *   *   *   *   ** ** ***** *   *  *  * *  *  ****  ****  ***  *  *  *   * *   *  * *  *  *  ****  ",
+    "*   * *   * *      *  *  * *   *     * *    *  *  *   *  *   ****    *   * * * *   * *   *  **** ****  *     *****  *   *  *   * *  * * *   *    *     *    ",
+    " *** *****   ****  ****  ***   *    ****    *  *  *   ****   *   *   *   *   * *   *  ***   *       *  *     ****   **  ****    *   *   *  * *  *     ****  "
+]
 
-# -------------------------------------------------------------
+
+
+
 
 def oneCharacter():
     os.system("cls")
     color = chooseColor()
+    os.system("cls")
 
     print("\n\n","*"*10,"ASCII ART PROJECT","*"*10,end="\n\n")
     print("\n\n","*"*10,"One Character Module","*"*10,end="\n\n")
 
-    text = input("Enter a Character (Only One Character) -- ").upper()
+    text = input("Enter a Character (Only One Character) -- ")
+    # text = input("Enter a Character (Only One Character) -- ").upper()
     
     if len(text) != 1:
         print("\n\nPlease Enter Only One Letter -- \n\n")
         oneCharacter()
         return
+    if ord(text) >= 97 and ord(text)<= 122:
+        n = ((ord(text)-96)-1)*6
+        for row in sm_data:
+            for col in range(n, n+6):
+                print(color + row[col], end="")
+            print()
+    else:
+        n = (ord(text)-17)*6 if text.isdigit() else ((ord(text)-64)-1)*6
+        for row in data:
+            for col in range(n, n+6):
+                print(color + row[col], end="")
+            print()
+    
 
-    n = (ord(text)-17)*6 if text.isdigit() else ((ord(text)-64)-1)*6
-
-    for row in data:
-        for col in range(n, n+6):
-            print(color + row[col], end="")
-        print()
-
-# -------------------------------------------------------------
 
 def alphaNumWords():
     os.system("cls")
     color = chooseColor()
-    sys.stdin.flush()
+    os.system("cls")
 
     print("\n\n","*"*10,"ASCII ART PROJECT","*"*10,end="\n\n")
     print("\n\n","*"*10,"Alpha Numeric Words Module","*"*10,end="\n\n")
 
-    text = input("Enter String (Only <= 15 Character) -- ").upper()
-    
+    text = input("Enter String (Only <= 15 Character) -- ")
+
     if not (1 <= len(text) <= 15):
-        print("\n\nPlease Enter Only <=15 Letter -- \n\n")
+        print("\n\nPlease Enter Only <=15 Characters\n")
         alphaNumWords()
         return
 
-    for row in data:
+
+    for row_index in range(5):
         for ch in text:
-            n = (ord(ch)-17)*6 if ch.isdigit() else ((ord(ch)-64)-1)*6
+
+            
+            if 'a' <= ch <= 'z':
+                n = ((ord(ch) - 96) - 1) * 6
+                source = sm_data
+
+            
+            elif ch.isdigit():
+                n = (ord(ch) - 17) * 6
+                source = data
+
+           
+            elif 'A' <= ch <= 'Z':
+                n = ((ord(ch) - 64) - 1) * 6
+                source = data
+
+            else:
+                
+                print(" " * 6, end="")
+                continue
+
             for col in range(n, n+6):
-                print(color + row[col], end="")
+                print(color + source[row_index][col], end="")
+
         print()
 
-# -------------------------------------------------------------
+
 
 def alphaRange():
     os.system("cls")
     color = chooseColor()
-    sys.stdin.flush()
+    os.system("cls")
 
     print("\n\n","*"*10,"ASCII ART PROJECT","*"*10,end="\n\n")
     print("\n\n","*"*10,"Alpha Range Module","*"*10,end="\n\n")
 
-    text = input("Enter Range in Format (A-D) -- ").upper()
+    text = input("Enter Range in Format (A-D or a-d) -- ")
 
-    if len(text) != 3:
+    if len(text) != 3 or text[1] != '-':
         print("\n\nPlease Enter Valid Range -- \n\n")
         alphaRange()
         return
 
-    sr = ord(text[0]) - 64
-    er = ord(text[2]) - 64
+    start_ch = text[0]
+    end_ch   = text[2]
 
-    if sr > er:
+    if start_ch > end_ch:
         print("\n\nRange must be in sequence -- \n\n")
         alphaRange()
         return
 
-    for row in data:
-        for x in range(sr, er+1):
-            start = (x-1) * 6
-            for col in range(start, start+6):
-                print(color + row[col], end="")
+    
+    for row_index in range(5):
+        for ch in range(ord(start_ch), ord(end_ch) + 1):
+
+            c = chr(ch)
+
+            if 'a' <= c <= 'z':
+                n = ((ord(c) - 96) - 1) * 6
+                source = sm_data
+
+            elif 'A' <= c <= 'Z':
+                n = ((ord(c) - 64) - 1) * 6
+                source = data
+
+            else:
+                print(" " * 6, end="")
+                continue
+
+            for col in range(n, n+6):
+                print(color + source[row_index][col], end="")
+
         print()
 
-# -------------------------------------------------------------
 
 def onlyAlpha():
     os.system("cls")
     color = chooseColor()
-    sys.stdin.flush()
+    os.system("cls")
 
     print("\n\n","*"*10,"ASCII ART PROJECT","*"*10,end="\n\n")
     print("\n\n","*"*10,"Only Alphabets Module","*"*10,end="\n\n")
 
-    text = input("Enter Alphabets Only (<= 15) -- ").upper()
+    text = input("Enter Alphabets Only (<= 15) -- ")
 
-    if not text.isalpha():
-        print("\n\nPlease Enter Only Alphabets -- \n\n")
+    if not text.isalpha() or len(text) > 15:
+        print("\n\nPlease Enter Only Alphabets (Max 15)\n")
         onlyAlpha()
         return
 
-    for row in data:
+    for row_index in range(5):
         for ch in text:
-            n = ((ord(ch) - 64) - 1) * 6
+
+            if 'a' <= ch <= 'z':
+                n = ((ord(ch) - 96) - 1) * 6
+                source = sm_data
+
+            elif 'A' <= ch <= 'Z':
+                n = ((ord(ch) - 64) - 1) * 6
+                source = data
+
+            else:
+                print(" " * 6, end="")
+                continue
+
             for col in range(n, n+6):
-                print(color + row[col], end="")
+                print(color + source[row_index][col], end="")
+
         print()
 
-# -------------------------------------------------------------
 
 def onlyNum():
     os.system("cls")
     color = chooseColor()
     sys.stdin.flush()
+    os.system("cls")
 
     print("\n\n","*"*10,"ASCII ART PROJECT","*"*10,end="\n\n")
     print("\n\n","*"*10,"Only Numbers Module","*"*10,end="\n\n")
@@ -165,7 +227,6 @@ def onlyNum():
                 print(color + row[col], end="")
         print()
 
-# -------------------------------------------------------------
 
 def mainUI():
     os.system("cls")
@@ -193,3 +254,5 @@ def mainUI():
         mainUI()
 
 mainUI()
+
+
